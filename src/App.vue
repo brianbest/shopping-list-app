@@ -1,43 +1,40 @@
 <template>
   <div id="app">
     <Header size="title">Shopping List</Header>
-    <div class="">
-      <input type="text" v-model="newItem" v-on:keydown.enter="addToList">
-      <button :disabled="newItem == ''" v-on:click="addToList">Add item</button>
-    </div>
+    <AddItemForm v-on:confirm="addToList"></AddItemForm>
     <button v-on:click="clearList">Clear list</button>
-    <ul>
-      <li
-      v-for="item in items"
-      v-on:click="removeItem(item)"
-      v-bind:key="item.id"
-      :class="{purchased: item.purchased}">{{item.name}}</li>
-    </ul>
+    <ShoppingCart :items="items" />
   </div>
 </template>
 
 <script>
 import Header from './components/header/header.vue'
+import AddItemForm from './components/add-item-form/AddItemForm.vue'
+import ShoppingCart from './components/shopping-cart/shopping-cart.vue'
 
 export default {
   name: 'app',
   components: {
-    Header
+    Header,
+    AddItemForm,
+    ShoppingCart
   },
   data: function() {
     return {
       newItem: '',
       items: [
-        {id: 1, name: 'namde'}
+        {id: 1, name: 'namde'},
+        {id: 2, name: 'ghjg'},
+        {id: 3, name: 'ihoh'}
       ]
     }
   },
   methods: {
-    addToList: function () {
-      if (this.newItem == '') {
+    addToList: function (itemName) {
+      if (itemName == '') {
         return;
       }
-      var x = {id: this.items.length + 1, name: this.newItem, purchased: false};
+      var x = {id: this.items.length + 1, name: itemName, purchased: false};
       this.items.push(x);
       this.newItem = '';
     },
@@ -56,11 +53,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-.purchased{
-  color: green;
 }
 </style>
