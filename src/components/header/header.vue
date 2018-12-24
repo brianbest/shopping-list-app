@@ -15,7 +15,8 @@ export default {
 </script>
 
 <style>
-  .title {
+  .header {
+    margin: 0;
     font-size: 30px;
   }
 

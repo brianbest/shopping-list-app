@@ -1,14 +1,18 @@
 <template>
   <div class="">
     <input type="text" v-model="newItem" v-on:keydown.enter="confirm">
-    <button :disabled="newItem == ''" v-on:click="confirm">Add item</button>
+    <Button :disabled="newItem == ''" v-on:click="confirm">Add item</Button>
   </div>
 </template>
 
 <script>
+import Button from '../buttons/Button.vue';
 
 export default {
   name: 'AddItemForm',
+  components: {
+    Button
+  },
   data: function(){
     return {
       newItem: ''
@@ -16,8 +20,8 @@ export default {
   },
   methods: {
     confirm: function () {
-      //this.onConfirm(this.newItem)
       this.$emit('confirm', this.newItem);
+      this.newItem = "";
     }
   }
 }
